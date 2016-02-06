@@ -17,8 +17,3 @@ $url = "https://hooks.slack.com/services/T0L5FMSKV/B0L96L8JU/7h3prZPPKWEDdfZeS6C
 
 $context  = stream_context_create($options);
 $result = file_get_contents($url, false, $context);
-//if ($result === FALSE) { /* Handle error */ }
-		
-// send reply
-$sendto ="{\"text\": \"This is a line of text in a channel.\nAnd this is another line of text.\"}";
-file_get_contents($sendto);
