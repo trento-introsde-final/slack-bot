@@ -1,10 +1,8 @@
 <?php 
 	
-// read incoming info and grab the chatID
 $content = file_get_contents("php://input");
 $update = json_decode($content, true);
 
-// use key 'http' even if you send the request to https://...
 $options = array(
     'http' => array(
         'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
