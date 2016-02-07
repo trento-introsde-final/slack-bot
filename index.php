@@ -5,6 +5,7 @@
 $client = new SoapClient('https://process-centric-services.herokuapp.com/processCentricServices?wsdl');
 
 $trigger_word = $_REQUEST['trigger_word'];
+$trigger_word = strtolower($trigger_word);
 
 $slack_user_id = $_REQUEST['user_id'];
 
