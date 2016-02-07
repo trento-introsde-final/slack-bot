@@ -34,7 +34,7 @@ if($trigger_word == "register"){
 	    'http' => array(
 	        'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
 	        'method'  => 'POST',
-	        'content' => "{\"text\": \"Response: " . $esponse->id . "\"}",
+	        'content' => "{\"text\": \"Response: " . $response->id . "\"}",
 	    ),
 	);
 
