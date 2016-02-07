@@ -20,6 +20,8 @@ if($trigger_word == "register"){
 
 	$response = $client->initializeUser($params);
 
+	$message = "";
+
 	if($response->id == -1){
 		$message = "Bad parameters";
 	} else if($response->id == -2){
@@ -36,7 +38,7 @@ if($trigger_word == "register"){
 	    'http' => array(
 	        'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
 	        'method'  => 'POST',
-	        'content' => "{\"text\": \"Response: " . $message . "\"}",
+	        'content' => "{\"text\": \"" . $message . "\"}",
 	    ),
 	);
 
@@ -150,6 +152,14 @@ curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
 curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 $result = curl_exec($ch);
+
+echo var_dump($result);
+if($result === false){
+    echo 'Curl error: ' . curl_error($ch);
+}
+ 
+
+
 curl_close($ch);
 
 
