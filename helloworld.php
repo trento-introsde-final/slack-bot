@@ -1,8 +1,4 @@
-<?php 
-
-ini_set('soap.wsdl_cache_enabled', 0);
-ini_set('soap.wsdl_cache_ttl', 900);
-ini_set('default_socket_timeout', 15);
+<?php
 	
 //$content = file_get_contents("php://input");
 
@@ -62,7 +58,6 @@ $params = array (
 );
 
 try {
-	libxml_disable_entity_loader(false);
 	$client = new SoapClient('https://process-centric-services.herokuapp.com/processCentricServices?wsdl');
 	$response = $client->initializeUser($params);
 } catch(Exception $e) {
