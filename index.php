@@ -61,7 +61,7 @@ if($trigger_word == "register"){
 	    'http' => array(
 	        'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
 	        'method'  => 'POST',
-	        'content' => "{\"text\": \"distance: " .$distance. " " . "time " . $time . "\"}",
+	        'content' => "{\"text\": \"Response: " .$distance. " " . "time " . $time . "\"}",
 	    ),
 	);
 
@@ -73,11 +73,36 @@ if($trigger_word == "register"){
 
 	$response = $client->checkGoalStatus($params);
 
+	$message = "";
+
+	if(count($response->goal->goalStatusList) > 0){
+		foreach ($response->goal->goalStatusList as $value) {
+		    if($value->goal_met == 1){
+		        $goal_met = "no";
+		    } elseif($value->goal_met == 0){
+		        $goal_met = "yes";
+		    }
+		    $message .= "Count: " . $value->count . "\n";
+		    $message .= "Goal met: " . $goal_met . "\n";
+		    $message .= "Name: " . $value->name . "\n";
+		    $message .= "Period: " . $value->period . "\n";
+		    $message .= "End date: " . $value->period_end . "\n";
+		    $message .= "Start date: " . $value->period_start . "\n";
+		    $message .= "Target: " . $value->target . "\n";
+		    $message .= "Type: " . $value->type . "\n";
+		    $message .= "Units: " . $value->units . "\n";
+		    $message .= "\n\n";
+		}
+	}
+	
+
 	$options = array(
 	    'http' => array(
 	        'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
 	        'method'  => 'POST',
-	        'content' => "{\"text\": \"response: " .$response->goal. " " . "trigger_word " . $trigger_word . "\"}",
+	        'content' => "{\"text\": {$response->goal->messages[0]->content}\n\n
+	        				{$message}\n\n
+	        				{$response->goal->messages[2]->content}\"}",
 	    ),
 	);
 	
