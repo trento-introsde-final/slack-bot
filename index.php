@@ -133,6 +133,7 @@ if($trigger_word == "register"){
 
 
 $inWebhookUrl = "https://hooks.slack.com/services/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";
+var_dump($options);
 
 $context = stream_context_create($options);
 $result = file_get_contents($inWebhookUrl, false, $context);
