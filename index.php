@@ -100,7 +100,7 @@ if($trigger_word == "register"){
 	    'http' => array(
 	        'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
 	        'method'  => 'POST',
-	        'content' => "{\"text\": ".$response->goal->messages[0]->content."\n\n".$message"\n\n".$response->goal->messages[2]->content"\"}",
+	        'content' => "{\"text\": " .$response->goal->messages[0]->content. "\n\n" .$message. "\n\n" .$response->goal->messages[2]->content. "\"}",
 	    ),
 	);
 	
@@ -129,3 +129,16 @@ $inWebhookUrl = "https://hooks.slack.com/services/T0L5FMSKV/B0L96L8JU/7h3prZPPKW
 
 $context = stream_context_create($options);
 $result = file_get_contents($inWebhookUrl, false, $context);
+
+
+
+
+
+
+
+
+
+
+
+
+
