@@ -4,11 +4,7 @@
 
 $inWebhookUrl = "https://hooks.slack.com/services/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";
 
-try {
-	$client = new SoapClient('https://process-centric-services.herokuapp.com/processCentricServices?wsdl');
-} catch(Exception $e) {
-	die($e->getMessage());
-}
+$client = new SoapClient('https://process-centric-services.herokuapp.com/processCentricServices?wsdl');
 
 $trigger_word = $_REQUEST['trigger_word'];
 
