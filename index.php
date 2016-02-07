@@ -2,8 +2,6 @@
 	
 //$content = file_get_contents("php://input");
 
-$inWebhookUrl = "https://hooks.slack.com/services/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";
-
 $client = new SoapClient('https://process-centric-services.herokuapp.com/processCentricServices?wsdl');
 
 $trigger_word = $_REQUEST['trigger_word'];
@@ -21,11 +19,21 @@ if($trigger_word == "register"){
 
 	$response = $client->initializeUser($params);
 
+	if($response->id == -1){
+		$message = "Bad parameters";
+	} elseif($response->id == -2){
+		$message = "No error, but got bad response";
+	} elseif($response->id == -3){
+		$message = "You are already registered";
+	} elseif($response->id > 0){
+		$message = "You have been registered! Here is your id " . $response->id;
+	}
+
 	$options = array(
 	    'http' => array(
 	        'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
 	        'method'  => 'POST',
-	        'content' => "{\"text\": \"response: " .$response->id. " " . "trigger_word " . $trigger_word . "\"}",
+	        'content' => "{\"text\": \"Response: " . $message . "\"}",
 	    ),
 	);
 
@@ -39,7 +47,9 @@ if($trigger_word == "register"){
 
 	$params = array (
 	    "slack_user_id" => $slack_user_id,
-	    "user_name" => $user_name,
+	    "distance" => $distance,
+	    "time" => $time,
+	    "calories" => $calories,
 	);
 
 	$response = $client->updateRunInfo($params);
@@ -60,8 +70,6 @@ if($trigger_word == "register"){
 
 	$response = $client->checkGoalStatus($params);
 
-	var_dump($response->goal);
-
 	$options = array(
 	    'http' => array(
 	        'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
@@ -71,17 +79,27 @@ if($trigger_word == "register"){
 	);
 	
 } else if($trigger_word == "setgoal"){
-	
+
+	$text = $_REQUEST['text'];
+	$text_array = explode(" ", $text);
+	$target_value = $text_array[1];
+	$type = $text_array[2];
+	$goal_measure_type = $text_array[3];
+	$goal_period = $text_array[4];
+
+	$params = array (
+	    "slack_user_id" => $slack_user_id,
+	    "target_value" => $target_value,
+	    "type" => $type,
+	    "goal_measure_type" => $goal_measure_type,
+	    "goal_period" => $goal_period,
+	);
+
+	$response = $client->setGoal($params);
 }
 
-$user_name = $_REQUEST['user_name'];
-$slack_user_id = $_REQUEST['user_id'];
 
-$params = array (
-    "slack_user_id" => $slack_user_id,
-    "user_name" => $user_name,
-);
-
+$inWebhookUrl = "https://hooks.slack.com/services/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";
 
 $context = stream_context_create($options);
 $result = file_get_contents($inWebhookUrl, false, $context);
