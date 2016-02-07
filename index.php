@@ -23,8 +23,10 @@ if($trigger_word == "register"){
 	if($id == -1){
 		$message = "Bad parameters";
 	} else if($id == -2){
-		$message = "No error, but got bad response";
+		$message = "Error in some called server";
 	} else if($id == -3){
+		$message = "No error, but got bad response";
+	} else if($id == -4){
 		$message = "You are already registered";
 	} else if($id > 0){
 		$message = "You have been registered! Here is your id: " . $response->id;
@@ -34,7 +36,7 @@ if($trigger_word == "register"){
 	    'http' => array(
 	        'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
 	        'method'  => 'POST',
-	        'content' => "{\"text\": \"Response: " . $response->id . "\"}",
+	        'content' => "{\"text\": \"Response: " . $message . "\"}",
 	    ),
 	);
 
