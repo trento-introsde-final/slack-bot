@@ -1,6 +1,8 @@
 <?php
-	
+
 //$content = file_get_contents("php://input");
+
+$inWebhookUrl = "https://hooks.slack.com/services/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";
 
 $client = new SoapClient('https://process-centric-services.herokuapp.com/processCentricServices?wsdl');
 
@@ -41,6 +43,9 @@ if($trigger_word == "register"){
 	        'content' => "{\"text\": \"" . $message . "\"}",
 	    ),
 	);
+
+	$context = stream_context_create($options);
+	$result = file_get_contents($inWebhookUrl, false, $context);
 
 } else if($trigger_word == "run"){
 
@@ -112,6 +117,26 @@ if($trigger_word == "register"){
 	        'content' => "{\"text\": " .$message. "\"}",
 	    ),
 	);
+
+	$data = "payload=" . json_encode(array(
+            "channel"       =>  "#tests",
+            "text"          =>  $message,
+        ));
+	
+	// You can get your webhook endpoint from your Slack settings
+	$ch = curl_init("WEBHOOK ENDPOINT GOES HERE");
+	curl_setopt($ch, CURLOPT_URL, $inWebhookUrl);
+	curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+	curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+	$result = curl_exec($ch);
+
+	echo var_dump($result);
+	if($result === false){
+	    echo 'Curl error: ' . curl_error($ch);
+	}
+
+	curl_close($ch);
 	
 } else if($trigger_word == "setgoal"){
 
@@ -134,33 +159,8 @@ if($trigger_word == "register"){
 }
 
 
-$inWebhookUrl = "https://hooks.slack.com/services/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";
-var_dump($options);
-
 //$context = stream_context_create($options);
 //$result = file_get_contents($inWebhookUrl, false, $context);
-
-$data = "payload=" . json_encode(array(
-            "channel"       =>  "#tests",
-            "text"          =>  $message,
-        ));
-	
-	// You can get your webhook endpoint from your Slack settings
-$ch = curl_init("WEBHOOK ENDPOINT GOES HERE");
-curl_setopt($ch, CURLOPT_URL, $inWebhookUrl);
-curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
-curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-$result = curl_exec($ch);
-
-echo var_dump($result);
-if($result === false){
-    echo 'Curl error: ' . curl_error($ch);
-}
- 
-
-
-curl_close($ch);
 
 
 /*$curl_handle=curl_init();
