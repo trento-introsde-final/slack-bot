@@ -135,9 +135,21 @@ if($trigger_word == "register"){
 $inWebhookUrl = "https://hooks.slack.com/services/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";
 var_dump($options);
 
-$context = stream_context_create($options);
-$result = file_get_contents($inWebhookUrl, false, $context);
+//$context = stream_context_create($options);
+//$result = file_get_contents($inWebhookUrl, false, $context);
 
+$data = "payload=" . json_encode(array(
+            "channel"       =>  "#tests",
+            "text"          =>  $message,
+        ));
+	
+	// You can get your webhook endpoint from your Slack settings
+$ch = curl_init("WEBHOOK ENDPOINT GOES HERE");
+curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+$result = curl_exec($ch);
+curl_close($ch);
 
 
 /*$curl_handle=curl_init();
