@@ -18,14 +18,15 @@ if($trigger_word == "register"){
 	);
 
 	$response = $client->initializeUser($params);
+	$id = $response->id;
 
-	if($response->id == -1){
+	if($id == -1){
 		$message = "Bad parameters";
-	} elseif($response->id == -2){
+	} else if($id == -2){
 		$message = "No error, but got bad response";
-	} elseif($response->id == -3){
+	} else if($id == -3){
 		$message = "You are already registered";
-	} elseif($response->id > 0){
+	} else if($id > 0){
 		$message = "You have been registered! Here is your id: " . $response->id;
 	}
 
