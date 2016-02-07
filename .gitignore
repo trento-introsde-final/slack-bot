@@ -1,3 +1,5 @@
 vendor/
 .env
+test.php
+app.yaml
 
