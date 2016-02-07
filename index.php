@@ -8,17 +8,17 @@ $client = new SoapClient('https://process-centric-services.herokuapp.com/process
 
 $trigger_word = $_REQUEST['trigger_word'];
 
+$slack_user_id = $_REQUEST['user_id'];
+
 if($trigger_word == "register"){
 
 	$user_name = $_REQUEST['user_name'];
-	$slack_user_id = $_REQUEST['user_id'];
 
 	$params = array (
 	    "slack_user_id" => $slack_user_id,
 	    "user_name" => $user_name,
 	);
 
-	//$response = $client->__soapCall('initializeUser', array($params));
 	$response = $client->initializeUser($params);
 
 	$options = array(
@@ -37,6 +37,13 @@ if($trigger_word == "register"){
 	$time = $text_array[2];
 	$calories = $text_array[3];
 
+	$params = array (
+	    "slack_user_id" => $slack_user_id,
+	    "user_name" => $user_name,
+	);
+
+	$response = $client->updateRunInfo($params);
+
 	$options = array(
 	    'http' => array(
 	        'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
@@ -46,6 +53,20 @@ if($trigger_word == "register"){
 	);
 
 } else if($trigger_word == "goalstatus"){
+
+	$params = array (
+	    "slack_user_id" => $slack_user_id,
+	);
+
+	$response = $client->checkGoalStatus($params);
+
+	$options = array(
+	    'http' => array(
+	        'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+	        'method'  => 'POST',
+	        'content' => "{\"text\": \"goalstatus: " .$response->id. " " . "trigger_word " . $trigger_word . "\"}",
+	    ),
+	);
 	
 } else if($trigger_word == "setgoal"){
 	
