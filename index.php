@@ -26,7 +26,7 @@ if($trigger_word == "register"){
 	} elseif($response->id == -3){
 		$message = "You are already registered";
 	} elseif($response->id > 0){
-		$message = "You have been registered! Here is your id " . $response->id;
+		$message = "You have been registered! Here is your id: " . $response->id;
 	}
 
 	$options = array(
