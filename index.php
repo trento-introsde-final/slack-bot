@@ -145,6 +145,7 @@ $data = "payload=" . json_encode(array(
 	
 	// You can get your webhook endpoint from your Slack settings
 $ch = curl_init("WEBHOOK ENDPOINT GOES HERE");
+curl_setopt($ch, CURLOPT_URL, $inWebhookUrl);
 curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
 curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
