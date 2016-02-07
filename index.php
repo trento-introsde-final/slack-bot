@@ -134,8 +134,8 @@ $result = file_get_contents($inWebhookUrl, false, $context);*/
 $curl_handle=curl_init();
 curl_setopt($curl_handle, CURLOPT_URL,$inWebhookUrl);
 curl_setopt($curl_handle, CURLOPT_CONNECTTIMEOUT, 2);
-curl_setopt($ch,CURLOPT_POST, 1);
-curl_setopt($ch,CURLOPT_POSTFIELDS,$options);
+curl_setopt($curl_handle,CURLOPT_POST, 1);
+curl_setopt($curl_handle,CURLOPT_POSTFIELDS,$options);
 curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER, 1);
 $query = curl_exec($curl_handle);
 curl_close($curl_handle);
