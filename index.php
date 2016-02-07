@@ -95,7 +95,6 @@ if($trigger_word == "register"){
 		}
 	}
 	
-
 	$options = array(
 	    'http' => array(
 	        'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
@@ -127,12 +126,19 @@ if($trigger_word == "register"){
 
 $inWebhookUrl = "https://hooks.slack.com/services/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";
 
-$context = stream_context_create($options);
-$result = file_get_contents($inWebhookUrl, false, $context);
+/*$context = stream_context_create($options);
+$result = file_get_contents($inWebhookUrl, false, $context);*/
 
 
 
-
+$curl_handle=curl_init();
+curl_setopt($curl_handle, CURLOPT_URL,$inWebhookUrl);
+curl_setopt($curl_handle, CURLOPT_CONNECTTIMEOUT, 2);
+curl_setopt($ch,CURLOPT_POST, 1);
+curl_setopt($ch,CURLOPT_POSTFIELDS,$postvars);
+curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER, 1);
+$query = curl_exec($curl_handle);
+curl_close($curl_handle);
 
 
 
