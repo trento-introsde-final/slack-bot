@@ -4,9 +4,15 @@
 
 $inWebhookUrl = "https://hooks.slack.com/services/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";
 
+try {
+	$client = new SoapClient('https://process-centric-services.herokuapp.com/processCentricServices?wsdl');
+} catch(Exception $e) {
+	die($e->getMessage());
+}
+
 $trigger_word = $_REQUEST['trigger_word'];
 
-/*if($trigger_word == "register"){
+if($trigger_word == "register"){
 
 	$user_name = $_REQUEST['user_name'];
 	$slack_user_id = $_REQUEST['user_id'];
@@ -47,7 +53,7 @@ $trigger_word = $_REQUEST['trigger_word'];
 	
 } else if($trigger_word == "setgoal"){
 	
-}*/
+}
 
 $user_name = $_REQUEST['user_name'];
 $slack_user_id = $_REQUEST['user_id'];
@@ -55,31 +61,6 @@ $slack_user_id = $_REQUEST['user_id'];
 $params = array (
     "slack_user_id" => $slack_user_id,
     "user_name" => $user_name,
-);
-
-try {
-	$client = new SoapClient('https://process-centric-services.herokuapp.com/processCentricServices?wsdl');
-	$response = $client->initializeUser($params);
-} catch(Exception $e) {
-	die($e->getMessage());
-}
-
-/*try{
-	file_get_contents("https://process-centric-services.herokuapp.com/processCentricServices?wsdl");
-} catch(Exception $e) {
-	echo "file_get_contents ";
-	die($e->getMessage());
-}*/
-
-//$response = $client->__soapCall('initializeUser', array($params));
-
-
-$options = array(
-    'http' => array(
-        'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
-        'method'  => 'POST',
-        'content' => "{\"text\": \"response: " .$response->id. " " . "trigger_word " . $trigger_word . "\"}",
-    ),
 );
 
 
