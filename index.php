@@ -118,49 +118,33 @@ if($trigger_word == "register"){
 	    ),
 	);
 
-	$context = stream_context_create($options);
-	$result = file_get_contents("https://hooks.slack.com/services/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", false, $context);
+	/*$context = stream_context_create($options);
+	$result = file_get_contents("https://hooks.slack.com/services/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", false, $context);*/
 
-	 // is cURL installed yet?
-    if (!function_exists('curl_init')){
-        die('Sorry cURL is not installed!');
-    }
+    $data = "payload=" . json_encode(array(
+        "channel"       =>  "#tests",
+        "text"          =>  $last_message,
+    ));
 
-    /*$data = "payload=" . json_encode(array(
-			"channel"		=>  "#tests",
-			"text"			=>  $message,
-			"icon_emoji"	=>  ":globe_with_meridians:",
-	));*/
+	//$ch = curl_init($inWebhookUrl);
 
-	/*$data = http_build_query([
-        "token" => "YOUR_API_TOKEN",
-    	"channel" => $channel, //"#mychannel",
-    	"text" => $message, //"Hello, Foo-Bar channel message.",
-    	"username" => "MySlackBot",
-    ]);*/
- 
-    // OK cool - then let's create a new cURL resource handle
-    //$ch = curl_init($inWebhookUrl);
+	$ch = curl_init("https://hooks.slack.com/services/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");
 
-    $ch = curl_init("https://slack.com/api/chat.postMessage");
- 
-    // Set URL to download
-    //curl_setopt($ch, CURLOPT_URL, $inWebhookUrl);
+	// Set URL to download
+	//curl_setopt($ch, CURLOPT_URL, $inWebhookUrl);
 
 	curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
 	curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
-    // Timeout in seconds
-    //curl_setopt($ch, CURLOPT_TIMEOUT, 100);
- 
-    // Download the given URL, and return output
-    $output = curl_exec($ch);
- 
-    // Close the cURL resource, and free system resources
-    curl_close($ch);
- 
-    die($output);
+	// Timeout in seconds
+	//curl_setopt($ch, CURLOPT_TIMEOUT, 100);
+
+	// Download the given URL, and return output
+	$output = curl_exec($ch);
+
+	// Close the cURL resource, and free system resources
+	curl_close($ch);
 	
 } else if($trigger_word == "setgoal"){
 
