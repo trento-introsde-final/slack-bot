@@ -298,24 +298,29 @@ try {
 		curl_close($ch);
 	} elseif($trigger_word == "help") {
 		
-		$message = "We are here to helop you! Here is what you can do: ";
+		$message = "We are here to help you! Here is what you can do: ";
 		$attachment = array([
             'color'    => '#5AAC56',
             'fields'	=> array(
             		array(
+            			'title' => 'register',
+            			'value' => 'Create an account before getting started',
+            			'short' => false
+        			),
+            		array(
             			'title' => 'setgoal [goal_type] [target_value] [period]',
             			'value' => 'Set a fitness goal',
-            			'short' => true
+            			'short' => false
         			),
         			array(
             			'title' => 'run [distance] [time] [calories]',
             			'value' => 'Add a new run',
-            			'short' => true
+            			'short' => false
         			),
 					array(
             			'title' => 'goalstatus',
             			'value' => 'Check where you stand',
-            			'short' => true
+            			'short' => false
         			)
             	),
         ]);
