@@ -195,8 +195,8 @@ try {
 
 		// Close the cURL resource, and free system resources
 		curl_close($ch);
-	} else {
-		$message = "Wrong command! These are the commands available: register, run, goalstatus, setgoal";
+	} elseif($trigger_word != "register" || $trigger_word != "run" || $trigger_word != "goalstatus" || $trigger_word != "setgoal") {
+		$message = "Wrong command! These are the commands available: register,\n run [distance] [time] [calories],\n goalstatus,\n setgoal [goal_type] [target_value] [period] ";
 
 		$data = "payload=" . json_encode(array(
 	        "channel"       =>  "#tests",
