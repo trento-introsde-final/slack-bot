@@ -119,12 +119,12 @@ try {
 		$message = $response->person->messages[0]->content;
 		$motivation = $response->person->messages[1]->content;
 
-		$attachments =  array(
+		$attachments =  array([
                 'fallback' => $message,
                 'text' =>  $message,
                 'color'    => '#ff6600',
                 'title'    => $motivation,
-        );
+        ]);
 
 		$data = json_encode(array(
 	        "channel"       =>  $channel,
