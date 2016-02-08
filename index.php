@@ -110,44 +110,43 @@ if($trigger_word == "register"){
 	    ),
 	);*/
 
-	/*$options = array(
-	    'http' => array(
-	        'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
-	        'method'  => 'POST',
-	        'content' => "{\"text\": " .$message. "\"}",
-	    ),
-	);*/
-
-	/*$options = array(
-	    'http' => array(
-	        'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
-	        'method'  => 'POST',
-	        'content' => "{\"text\": ".$trigger_word." \"}",
-	    ),
-	);
-
-	$context = stream_context_create($options);*/
+	$context = stream_context_create($options);
 	$result = file_get_contents($inWebhookUrl, false, $context);
 
-	/*$data = "payload=" . json_encode(array(
-            "channel"       =>  "#tests",
-            "text"          =>  $message,
-        ));
-	
-	// You can get your webhook endpoint from your Slack settings
-	$ch = curl_init("WEBHOOK ENDPOINT GOES HERE");
-	curl_setopt($ch, CURLOPT_URL, $inWebhookUrl);
-	curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
-	curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
-	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-	$result = curl_exec($ch);
-
-	echo var_dump($result);
-	if($result === false){
-	    echo 'Curl error: ' . curl_error($ch);
-	}
-
-	curl_close($ch);*/
+	 // is cURL installed yet?
+    if (!function_exists('curl_init')){
+        die('Sorry cURL is not installed!');
+    }
+ 
+    // OK cool - then let's create a new cURL resource handle
+    $ch = curl_init();
+ 
+    // Now set some options (most are optional)
+ 
+    // Set URL to download
+    curl_setopt($ch, CURLOPT_URL, $inWebhookUrl);
+ 
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $options);
+ 
+    // User agent
+    curl_setopt($ch, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT']);
+ 
+    // Include header in result? (0 = yes, 1 = no)
+    curl_setopt($ch, CURLOPT_HEADER, 1);
+ 
+    // Should cURL return or print out the data? (true = return, false = print)
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+ 
+    // Timeout in seconds
+    curl_setopt($ch, CURLOPT_TIMEOUT, 100);
+ 
+    // Download the given URL, and return output
+    $output = curl_exec($ch);
+ 
+    // Close the cURL resource, and free system resources
+    curl_close($ch);
+ 
+    echo $output;
 	
 } else if($trigger_word == "setgoal"){
 
