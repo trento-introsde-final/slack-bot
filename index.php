@@ -2,9 +2,13 @@
 
 //$content = file_get_contents("php://input");
 
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true );
+
+ini_set('default_socket_timeout', 360);
+
 $inWebhookUrl = "https://hooks.slack.com/services/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";
 
-$client = new SoapClient('https://process-centric-services.herokuapp.com/processCentricServices?wsdl');
+$client = new SoapClient('https://process-centric-services.herokuapp.com/processCentricServices?wsdl', array("connection_timeout" => 360));
 
 $trigger_word = $_REQUEST['trigger_word'];
 $trigger_word = strtolower($trigger_word);
