@@ -135,7 +135,7 @@ if($trigger_word == "register"){
     curl_setopt($ch, CURLOPT_POST, 1); 
 	curl_setopt ($ch, CURLOPT_HEADER, 0);
  
-    curl_setopt($ch, CURLOPT_POSTFIELDS, $options);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $curl_post_data);
  
     // User agent
     curl_setopt($ch, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT']);
