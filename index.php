@@ -103,12 +103,18 @@ if($trigger_word == "register"){
 		    $message .= "\n\n";
 		}
 	}
+
+	$our_message = $response->goal->messages[0]->content;
+
+	$motivation = $response->goal->messages[2]->content;
+
+	$last_message = $our_message . "\n\n" . $message . "\n\n" .$motivation;
 	
 	$options = array(
 	    'http' => array(
 	        'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
 	        'method'  => 'POST',
-	        'content' => "{\"text\": " .$response->goal->messages[0]->content. "\n\n" .$message. "\n\n" .$response->goal->messages[2]->content. "\"}",
+	        'content' => "{\"text\": " . $last_message . "\"}",
 	    ),
 	);
 
