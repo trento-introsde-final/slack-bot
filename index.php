@@ -2,6 +2,7 @@
 
 ini_set('default_socket_timeout', 600);
 
+
 try {
     $client = new SoapClient("https://process-centric-services.herokuapp.com/processCentricServices?wsdl", array("connection_timeout" => 360));
 
