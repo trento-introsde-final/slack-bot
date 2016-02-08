@@ -118,6 +118,8 @@ if($trigger_word == "register"){
 
 	$our_message = $response->goal->messages[0]->content;
 
+	$image = $response->goal->messages[1]->content;
+
 	$motivation = $response->goal->messages[2]->content;
 
 	$last_message = $our_message . "\n\n" . $message . "\n\n" .$motivation;
@@ -125,6 +127,7 @@ if($trigger_word == "register"){
     $data = "payload=" . json_encode(array(
         "channel"       =>  "#tests",
         "text"          =>  $last_message,
+        "image_url"		=> 	$image,
     ));
 
 	$ch = curl_init("https://hooks.slack.com/services/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");
