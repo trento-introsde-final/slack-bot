@@ -197,7 +197,7 @@ try {
 		curl_close($ch);
 	} elseif(($trigger_word != "register" || $trigger_word != "run" || $trigger_word != "goalstatus" || $trigger_word != "setgoal") && $user_name != "slackbot") {
 		
-		$message = "Wrong command! These are the commands available:\n\n register,\n run [distance] [time] [calories],\n goalstatus,\n setgoal [goal_type] [target_value] [period] ";
+		$message = "Wrong command! These are the commands available:\n\n register\n run [distance] [time] [calories]\n goalstatus\n setgoal [goal_type] [target_value] [period]";
 
 		$data = "payload=" . json_encode(array(
 	        "channel"       =>  "#tests",
