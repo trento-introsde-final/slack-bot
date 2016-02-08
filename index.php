@@ -52,9 +52,9 @@ try {
 		$result = file_get_contents($inWebhookUrl, false, $context);*/
 
 		$attachment = array([
-            'fallback' =>  '*' . $user_name.'*: ' . $our_message,
-            'pretext'  => '*' . $user_name . '*: ' . $our_message,
-            'mrkdwn_in' => array('pretext'),
+            //'fallback' =>  '*' . $user_name.'*: ' . $our_message,
+            //'pretext'  => '*' . $user_name . '*: ' . $our_message,
+            //'mrkdwn_in' => array('pretext'),
             'color'    => '#5AAC56',
             'fields'	=> array(
             		array(
@@ -78,7 +78,7 @@ try {
 
 		$data = json_encode(array(
 	        "channel"       =>  $channel,
-	        "text"          =>  $message,
+	        "text"          =>  '*' . $user_name . '* ' . $message,
 	        "attachments"    =>  $attachment,
 	    ));
 
