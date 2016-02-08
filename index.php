@@ -110,8 +110,8 @@ if($trigger_word == "register"){
 	    ),
 	);*/
 
-	$context = stream_context_create($options);
-	$result = file_get_contents($inWebhookUrl, false, $context);
+	/*$context = stream_context_create($options);
+	$result = file_get_contents($inWebhookUrl, false, $context);*/
 
 	 // is cURL installed yet?
     if (!function_exists('curl_init')){
