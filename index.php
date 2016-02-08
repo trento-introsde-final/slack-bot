@@ -35,51 +35,56 @@ try {
 		} else if($response->id == -3){
 			$message = "No error, but got bad response!";
 		} else if($response->id == -4){
-			$message = "You are already registered!";
+			$message = "You are already registered! Here is what you can do:";
+				$attachment = array([
+	            'color'    => '#5AAC56',
+	            'fields'	=> array(
+	            		array(
+	            			'title' => 'setgoal [goal_type] [target_value] [period]',
+	            			'value' => 'Set a fitness goal',
+	            			'short' => true
+	        			),
+	        			array(
+	            			'title' => 'run [distance] [time] [calories]',
+	            			'value' => 'Add a new run',
+	            			'short' => true
+	        			),
+						array(
+	            			'title' => 'goalstatus',
+	            			'value' => 'Check where you stand',
+	            			'short' => true
+	        			)
+	            	),
+	        ]);
+
 		} else if($response->id > 0){
 			$message = "You have been registered! Here is what you can do: ";
+			$attachment = array([
+	            'color'    => '#5AAC56',
+	            'fields'	=> array(
+	            		array(
+	            			'title' => 'setgoal [goal_type] [target_value] [period]',
+	            			'value' => 'Set a fitness goal',
+	            			'short' => true
+	        			),
+	        			array(
+	            			'title' => 'run [distance] [time] [calories]',
+	            			'value' => 'Add a new run',
+	            			'short' => true
+	        			),
+						array(
+	            			'title' => 'goalstatus',
+	            			'value' => 'Check where you stand',
+	            			'short' => true
+	        			)
+	            	),
+	        ]);
 		}
-
-		/*$options = array(
-		    'http' => array(
-		        'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
-		        'method'  => 'POST',
-		        'content' => "{\"text\": \"" . $message . "\"}",
-		    ),
-		);
-
-		$context = stream_context_create($options);
-		$result = file_get_contents($inWebhookUrl, false, $context);*/
-
-		$attachment = array([
-            //'fallback' =>  '*' . $user_name.'*: ' . $our_message,
-            //'pretext'  => '*' . $user_name . '*: ' . $our_message,
-            //'mrkdwn_in' => array('pretext'),
-            'color'    => '#5AAC56',
-            'fields'	=> array(
-            		array(
-            			'title' => 'setgoal [goal_type] [target_value] [period]',
-            			'value' => 'Set a fitness goal',
-            			'short' => true
-        			),
-        			array(
-            			'title' => 'run [distance] [time] [calories]',
-            			'value' => 'Add a new run',
-            			'short' => true
-        			),
-					array(
-            			'title' => 'goalstatus',
-            			'value' => 'Check where you stand',
-            			'short' => true
-        			)
-            	),
-        ]);
-
 
 		$data = json_encode(array(
 	        "channel"       =>  $channel,
 	        "text"          =>  '*' . $user_name . '* ' . $message,
-	        "attachments"    =>  $attachment,
+	        "attachments"   =>  $attachment,
 	    ));
 
 		$ch = curl_init("https://hooks.slack.com/services/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");
