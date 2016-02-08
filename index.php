@@ -198,7 +198,7 @@ try {
 	}
 } catch (SoapFault $fault) {
 
-	$message = $fault->faultstring;
+	$message = "Something went wrong :( Try again";
 
 	$data = "payload=" . json_encode(array(
         "channel"       =>  "#tests",
