@@ -4,8 +4,6 @@
 
 ini_set('default_socket_timeout', 360);
 
-$inWebhookUrl = "https://hooks.slack.com/services/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";
-
 $client = new SoapClient('https://process-centric-services.herokuapp.com/processCentricServices?wsdl', array("connection_timeout" => 360));
 
 $trigger_word = $_REQUEST['trigger_word'];
@@ -14,6 +12,8 @@ $trigger_word = strtolower($trigger_word);
 $slack_user_id = $_REQUEST['user_id'];
 
 if($trigger_word == "register"){
+
+	$inWebhookUrl = "https://hooks.slack.com/services/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";
 
 	$user_name = $_REQUEST['user_name'];
 
