@@ -5,6 +5,8 @@ ini_set('default_socket_timeout', 600);
 try {
     $client = new SoapClient("https://process-centric-services.herokuapp.com/processCentricServices?wsdl", array("connection_timeout" => 360));
 
+    $channel = "#tests";
+
     $trigger_word = $_REQUEST['trigger_word'];
 	$trigger_word = strtolower($trigger_word);
 
@@ -143,9 +145,8 @@ try {
 		$last_message = $our_message . "\n\n" . $image . "\n\n" . $message . "\n\n" .$motivation;
 
 	    $data = "payload=" . json_encode(array(
-	        "channel"       =>  "#tests",
+	        "channel"       =>  $channel,
 	        "text"          =>  $last_message,
-	        "image_url"		=> 	$image,
 	    ));
 
 		$ch = curl_init("https://hooks.slack.com/services/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");
@@ -180,7 +181,7 @@ try {
 		$message = $response->person->messages->content;
 
 		$data = "payload=" . json_encode(array(
-	        "channel"       =>  "#tests",
+	        "channel"       =>  $channel,
 	        "text"          =>  $message,
 	    ));
 
@@ -200,7 +201,7 @@ try {
 		$message = "Wrong command! These are the commands available:\n\n *register*\n *run* [distance] [time] [calories]\n *goalstatus*\n *setgoal* [goal_type] [target_value] [period]";
 
 		$data = "payload=" . json_encode(array(
-	        "channel"       =>  "#tests",
+	        "channel"       =>  $channel,
 	        "text"          =>  $message,
 	    ));
 
@@ -222,7 +223,7 @@ try {
 	$message = "Something went wrong :( Try again";
 
 	$data = "payload=" . json_encode(array(
-        "channel"       =>  "#tests",
+        "channel"       =>  $channel,
         "text"          =>  $message,
     ));
 
