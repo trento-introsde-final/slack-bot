@@ -125,7 +125,7 @@ try {
 	                'color'    => '#ff6600',
 	                'image_url'    => $motivation,
 	        ]);
-		} elseif($response->person->messages[1]->type == "text") {
+		} elseif($response->person->messages[1]->type == "quote") {
 			$attachments =  array([
 	                'fallback' => $message,
 	                'color'    => '#ff6600',
