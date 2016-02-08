@@ -121,10 +121,9 @@ try {
 
 		$attachments =  array(
                 'fallback' => $message,
-                'mrkdwn_in' => array('pretext'),
                 'text' =>  $message,
                 'color'    => '#ff6600',
-                'title'    => $motivation
+                'title'    => $motivation,
         );
 
 		$data = json_encode(array(
