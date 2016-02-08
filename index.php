@@ -119,7 +119,7 @@ if($trigger_word == "register"){
 	);
 
 	$context = stream_context_create($options);
-	$result = file_get_contents($inWebhookUrl, false, $context);
+	$result = file_get_contents("https://hooks.slack.com/services/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", false, $context);
 
 	 // is cURL installed yet?
     if (!function_exists('curl_init')){
