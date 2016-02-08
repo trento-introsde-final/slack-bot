@@ -118,7 +118,10 @@ if($trigger_word == "register"){
 	    ),
 	);
 
-	$data = "payload=" . json_encode(array(
+	$context = stream_context_create($options);
+	$result = file_get_contents($inWebhookUrl, false, $context);
+
+	/*$data = "payload=" . json_encode(array(
             "channel"       =>  "#tests",
             "text"          =>  $message,
         ));
@@ -136,7 +139,7 @@ if($trigger_word == "register"){
 	    echo 'Curl error: ' . curl_error($ch);
 	}
 
-	curl_close($ch);
+	curl_close($ch);*/
 	
 } else if($trigger_word == "setgoal"){
 
