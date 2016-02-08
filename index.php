@@ -110,11 +110,19 @@ if($trigger_word == "register"){
 	    ),
 	);*/
 
-	$options = array(
+	/*$options = array(
 	    'http' => array(
 	        'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
 	        'method'  => 'POST',
 	        'content' => "{\"text\": " .$message. "\"}",
+	    ),
+	);*/
+
+	$options = array(
+	    'http' => array(
+	        'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+	        'method'  => 'POST',
+	        'content' => "{\"text\": ciao \"}",
 	    ),
 	);
 
