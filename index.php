@@ -26,6 +26,7 @@ try {
 		$response = $client->initializeUser($params);
 
 		$message = "";
+		$attachment = "";
 
 		if($response->id == -1){
 			$message = "Bad parameters";
@@ -36,10 +37,10 @@ try {
 		} else if($response->id == -4){
 			$message = "You are already registered!";
 		} else if($response->id > 0){
-			$message = "You have been registered! Here is your id: " . $response->id;
+			$message = "You have been registered! Here is what you can do: ";
 		}
 
-		$options = array(
+		/*$options = array(
 		    'http' => array(
 		        'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
 		        'method'  => 'POST',
@@ -48,7 +49,50 @@ try {
 		);
 
 		$context = stream_context_create($options);
-		$result = file_get_contents($inWebhookUrl, false, $context);
+		$result = file_get_contents($inWebhookUrl, false, $context);*/
+
+		$attachment = array([
+            'fallback' =>  '*' . $user_name.'*: ' . $our_message,
+            'pretext'  => '*' . $user_name . '*: ' . $our_message,
+            'mrkdwn_in' => array('pretext'),
+            'color'    => '#5AAC56',
+            'fields'	=> array(
+            		array(
+            			'title' => 'setgoal [goal_type] [target_value] [period]',
+            			'value' => 'Set a fitness goal',
+            			'short' => true
+        			),
+        			array(
+            			'title' => 'run [distance] [time] [calories]',
+            			'value' => 'Add a new run',
+            			'short' => true
+        			),
+					array(
+            			'title' => 'goalstatus',
+            			'value' => 'Check where you stand',
+            			'short' => true
+        			)
+            	),
+        ]);
+
+
+		$data = json_encode(array(
+	        "channel"       =>  $channel,
+	        "text"          =>  $message,
+	        "attachments"    =>  $attachment,
+	    ));
+
+		$ch = curl_init("https://hooks.slack.com/services/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");
+
+		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+		curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+		// Download the given URL, and return output
+		$output = curl_exec($ch);
+
+		// Close the cURL resource, and free system resources
+		curl_close($ch);
 
 	} else if($trigger_word == "run"){
 
@@ -142,11 +186,21 @@ try {
 
 		$motivation = $response->goal->messages[2]->content;
 
-		$last_message = $our_message . "\n\n" . $image . "\n\n" . $message . "\n\n" .$motivation;
+		//$last_message = $our_message . "\n\n" . $image . "\n\n" . $message . "\n\n" .$motivation;
 
-	    $data = "payload=" . json_encode(array(
+	    $attachment = array([
+            'fallback' =>  '*' . $user_name.'*: ' . $our_message,
+            'pretext'  => '*' . $user_name . '*: ' . $our_message,
+            'mrkdwn_in' => array('pretext'),
+            'color'    => '#ff6600',
+            'title'    => $motivation,
+            'image_url'    => $image,
+        ]);
+
+
+		$data = json_encode(array(
 	        "channel"       =>  $channel,
-	        "text"          =>  $last_message,
+	        "attachments"    =>  $attachment,
 	    ));
 
 		$ch = curl_init("https://hooks.slack.com/services/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");
