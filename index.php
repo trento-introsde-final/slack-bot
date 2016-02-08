@@ -296,13 +296,34 @@ try {
 
 		// Close the cURL resource, and free system resources
 		curl_close($ch);
-	} elseif($trigger_word == "help" && $user_name != "slackbot") {
+	} elseif($trigger_word == "help") {
 		
-		$message = "Wrong command! These are the commands available:\n\n *register*\n *run* [distance] [time] [calories]\n *goalstatus*\n *setgoal* [goal_type] [target_value] [period]";
+		$message = "We are here to helop you! Here is what you can do: ";
+		$attachment = array([
+            'color'    => '#5AAC56',
+            'fields'	=> array(
+            		array(
+            			'title' => 'setgoal [goal_type] [target_value] [period]',
+            			'value' => 'Set a fitness goal',
+            			'short' => true
+        			),
+        			array(
+            			'title' => 'run [distance] [time] [calories]',
+            			'value' => 'Add a new run',
+            			'short' => true
+        			),
+					array(
+            			'title' => 'goalstatus',
+            			'value' => 'Check where you stand',
+            			'short' => true
+        			)
+            	),
+        ]);
 
-		$data = "payload=" . json_encode(array(
+		$data = json_encode(array(
 	        "channel"       =>  $channel,
-	        "text"          =>  $message,
+	        "text"          =>  'Hi *' . $user_name . '*. ' . $message,
+	        "attachments"   =>  $attachment,
 	    ));
 
 		$ch = curl_init("https://hooks.slack.com/services/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");
