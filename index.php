@@ -118,7 +118,7 @@ if($trigger_word == "register"){
 	    ),
 	);*/
 
-	$options = array(
+	/*$options = array(
 	    'http' => array(
 	        'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
 	        'method'  => 'POST',
@@ -126,7 +126,7 @@ if($trigger_word == "register"){
 	    ),
 	);
 
-	$context = stream_context_create($options);
+	$context = stream_context_create($options);*/
 	$result = file_get_contents($inWebhookUrl, false, $context);
 
 	/*$data = "payload=" . json_encode(array(
