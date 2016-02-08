@@ -142,25 +142,25 @@ try {
 		$message = "";
 
 		if(!empty($response->goal->goalStatusList)){
-	    if(count($response->goal->goalStatusList) > 1){
-	        foreach ($response->goal->goalStatusList as $value) {
-	            if($value->goal_met == 1){
-	                $goal_met = "no";
-	            } elseif($value->goal_met == 0){
-	                $goal_met = "yes";
-	            }
-	            $message .= "Count: " . $value->count . "\n";
-	            $message .= "Goal met: " . $goal_met . "\n";
-	            $message .= "Name: " . $value->name . "\n";
-	            $message .= "Period: " . $value->period . "\n";
-	            $message .= "End date: " . $value->period_end . "\n";
-	            $message .= "Start date: " . $value->period_start . "\n";
-	            $message .= "Target: " . $value->target . "\n";
-	            $message .= "Type: " . $value->type . "\n";
-	            $message .= "Units: " . $value->units . "\n";
-	            $message .= "\n\n";
-	        }
-	    } elseif(count($response->goal->goalStatusList) === 1){
+		    if(count($response->goal->goalStatusList) > 1){
+		        foreach ($response->goal->goalStatusList as $value) {
+		            if($value->goal_met == 1){
+		                $goal_met = "no";
+		            } elseif($value->goal_met == 0){
+		                $goal_met = "yes";
+		            }
+		            $message .= "Count: " . $value->count . "\n";
+		            $message .= "Goal met: " . $goal_met . "\n";
+		            $message .= "Name: " . $value->name . "\n";
+		            $message .= "Period: " . $value->period . "\n";
+		            $message .= "End date: " . $value->period_end . "\n";
+		            $message .= "Start date: " . $value->period_start . "\n";
+		            $message .= "Target: " . $value->target . "\n";
+		            $message .= "Type: " . $value->type . "\n";
+		            $message .= "Units: " . $value->units . "\n";
+		            $message .= "\n\n";
+		        }
+		    } elseif(count($response->goal->goalStatusList) === 1){
 		        if($response->goal->goalStatusList->goal_met == 1){
 		            $goal_met = "no";
 		        } elseif($response->goal->goalStatusList->goal_met == 0){
@@ -182,7 +182,7 @@ try {
 
 		$our_message = $response->goal->messages[0]->content;
 
-		$image = "<" . $response->goal->messages[1]->content . ">";
+		$image = $response->goal->messages[1]->content;
 
 		$motivation = $response->goal->messages[2]->content;
 
