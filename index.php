@@ -137,7 +137,7 @@ if($trigger_word == "register"){
 
 	$our_message = $response->goal->messages[0]->content;
 
-	$image = $response->goal->messages[1]->content;
+	$image = "<" . $response->goal->messages[1]->content . ">";
 
 	$motivation = $response->goal->messages[2]->content;
 
