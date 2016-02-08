@@ -120,31 +120,24 @@ if($trigger_word == "register"){
         die('Sorry cURL is not installed!');
     }
 
-    $curl_post_data = array(
-            "content" => "{\"text\": " .$response->goal->messages[0]->content. "\n\n" .$message. "\n\n" .$response->goal->messages[2]->content. "\"}",
-            );
+    $data = "payload=" . json_encode(array(
+			"channel"		=>  "#tests",
+			"text"			=>  $message,
+			"icon_emoji"	=>  ":globe_with_meridians:",
+	));
  
     // OK cool - then let's create a new cURL resource handle
-    $ch = curl_init();
-
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true );
+    $ch = curl_init($inWebhookUrl);
  
     // Set URL to download
-    curl_setopt($ch, CURLOPT_URL, $inWebhookUrl);
+    //curl_setopt($ch, CURLOPT_URL, $inWebhookUrl);
 
-    curl_setopt($ch, CURLOPT_POST, 1); 
-	curl_setopt ($ch, CURLOPT_HEADER, 0);
- 
-    curl_setopt($ch, CURLOPT_POSTFIELDS, $curl_post_data);
- 
-    // User agent
-    curl_setopt($ch, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT']);
- 
-    // Should cURL return or print out the data? (true = return, false = print)
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
- 
+	curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+	curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
     // Timeout in seconds
-    curl_setopt($ch, CURLOPT_TIMEOUT, 100);
+    //curl_setopt($ch, CURLOPT_TIMEOUT, 100);
  
     // Download the given URL, and return output
     $output = curl_exec($ch);
