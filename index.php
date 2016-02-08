@@ -133,12 +133,6 @@ try {
 	        ]);
 		}
 
-		$attachments =  array([
-                'fallback' => $message,
-                'color'    => '#ff6600',
-                'title'    => $motivation,
-        ]);
-
 		$data = json_encode(array(
 	        "channel"  =>  $channel,
             'text' =>  $message,
