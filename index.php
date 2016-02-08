@@ -116,8 +116,21 @@ try {
 
 		$response = $client->updateRunInfo($params);
 
-		$message = $response->person->messages[0]->content;
 		$motivation = $response->person->messages[1]->content;
+		
+		if($response->person->messages[1]->type == "image"){
+			$attachments =  array([
+	                'fallback' => $message,
+	                'color'    => '#ff6600',
+	                'image_url'    => $motivation,
+	        ]);
+		} elseif($response->person->messages[1]->type == "text") {
+			$attachments =  array([
+	                'fallback' => $message,
+	                'color'    => '#ff6600',
+	                'text'    => $motivation,
+	        ]);
+		}
 
 		$attachments =  array([
                 'fallback' => $message,
