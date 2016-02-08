@@ -116,12 +116,20 @@ try {
 
 		$response = $client->updateRunInfo($params);
 
-		$message = $response->person->messages[0]->content . "\n\n";
-		$message .= $response->person->messages[1]->content;
+		$message = $response->person->messages[0]->content;
+		$motivation = $response->person->messages[1]->content;
 
-		$data = "payload=" . json_encode(array(
-	        "channel"       =>  "#tests",
-	        "text"          =>  $message,
+		$attachments =  array(
+                'fallback' => $message,
+                'mrkdwn_in' => array('pretext'),
+                'text' =>  $message,
+                'color'    => '#ff6600',
+                'title'    => $motivation
+        );
+
+		$data = json_encode(array(
+	        "channel"       =>  $channel,
+	        "attachments"   =>  $attachments,
 	    ));
 
 		$ch = curl_init("https://hooks.slack.com/services/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");
@@ -146,11 +154,11 @@ try {
 
 		$message = "";
 
-    $goal_met = "";
+	    $goal_met = "";
 
-    $color = "";
+	    $color = "";
 
-    $attachments = array();
+	    $attachments = array();
 
     if(!empty($response->goal->goalStatusList)){
         if(count($response->goal->goalStatusList) > 1){
@@ -172,8 +180,6 @@ try {
                     $message .= "*".(intval($value->target) - intval($value->count)) . " left to go*";
                     $color = "F0D84F";
                 }
-
-                var_dump($value->goal_met);
                 
                 $message .= "\n\n";
 
