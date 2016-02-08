@@ -122,7 +122,7 @@ if($trigger_word == "register"){
 	    'http' => array(
 	        'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
 	        'method'  => 'POST',
-	        'content' => "{\"text\": ciao \"}",
+	        'content' => "{\"text\": ".$trigger_word." \"}",
 	    ),
 	);
 
