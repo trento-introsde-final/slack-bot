@@ -129,14 +129,14 @@ if($trigger_word == "register"){
  
     // Set URL to download
     curl_setopt($ch, CURLOPT_URL, $inWebhookUrl);
+
+    curl_setopt($ch, CURLOPT_POST, 1); 
+	curl_setopt ($ch, CURLOPT_HEADER, 0);
  
     curl_setopt($ch, CURLOPT_POSTFIELDS, $options);
  
     // User agent
     curl_setopt($ch, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT']);
- 
-    // Include header in result? (0 = yes, 1 = no)
-    curl_setopt($ch, CURLOPT_HEADER, 1);
  
     // Should cURL return or print out the data? (true = return, false = print)
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
