@@ -65,17 +65,17 @@ try {
 	            		array(
 	            			'title' => 'setgoal [goal_type] [target_value] [period]',
 	            			'value' => 'Set a fitness goal',
-	            			'short' => true
+	            			'short' => false
 	        			),
 	        			array(
 	            			'title' => 'run [distance] [time] [calories]',
 	            			'value' => 'Add a new run',
-	            			'short' => true
+	            			'short' => false
 	        			),
 						array(
 	            			'title' => 'goalstatus',
 	            			'value' => 'Check where you stand',
-	            			'short' => true
+	            			'short' => false
 	        			)
 	            	),
 	        ]);
