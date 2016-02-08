@@ -4,7 +4,7 @@
 
 ini_set('default_socket_timeout', 360);
 
-$inWebhookUrl = "https://hooks.slack.com/services/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";
+$inWebhookUrl = "https://hooks.slack.com/services/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";
 
 $client = new SoapClient('https://process-centric-services.herokuapp.com/processCentricServices?wsdl', array("connection_timeout" => 360));
 
@@ -104,30 +104,39 @@ if($trigger_word == "register"){
 		}
 	}
 	
-	/*$options = array(
+	$options = array(
 	    'http' => array(
 	        'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
 	        'method'  => 'POST',
 	        'content' => "{\"text\": " .$response->goal->messages[0]->content. "\n\n" .$message. "\n\n" .$response->goal->messages[2]->content. "\"}",
 	    ),
-	);*/
+	);
 
-	/*$context = stream_context_create($options);
-	$result = file_get_contents($inWebhookUrl, false, $context);*/
+	$context = stream_context_create($options);
+	$result = file_get_contents($inWebhookUrl, false, $context);
 
 	 // is cURL installed yet?
     if (!function_exists('curl_init')){
         die('Sorry cURL is not installed!');
     }
 
-    $data = "payload=" . json_encode(array(
+    /*$data = "payload=" . json_encode(array(
 			"channel"		=>  "#tests",
 			"text"			=>  $message,
 			"icon_emoji"	=>  ":globe_with_meridians:",
-	));
+	));*/
+
+	/*$data = http_build_query([
+        "token" => "YOUR_API_TOKEN",
+    	"channel" => $channel, //"#mychannel",
+    	"text" => $message, //"Hello, Foo-Bar channel message.",
+    	"username" => "MySlackBot",
+    ]);*/
  
     // OK cool - then let's create a new cURL resource handle
-    $ch = curl_init($inWebhookUrl);
+    //$ch = curl_init($inWebhookUrl);
+
+    $ch = curl_init("https://slack.com/api/chat.postMessage");
  
     // Set URL to download
     //curl_setopt($ch, CURLOPT_URL, $inWebhookUrl);
