@@ -146,103 +146,107 @@ try {
 
 		$message = "";
 
-		$goal_met = "";
+    $goal_met = "";
 
-		$color = "";
+    $color = "";
 
-		$attachments = array();
+    $attachments = array();
 
-		if(!empty($response->goal->goalStatusList)){
-		    if(count($response->goal->goalStatusList) > 1){
-		    	$i = 1;
-		        foreach ($response->goal->goalStatusList as $value) {
-		            if($value->goal_met == 1){
-		                $goal_met = "no";
-		            } elseif($value->goal_met == 0){
-		                $goal_met = "yes";
-		            }
-		            $message .= "Goal #".$i;
-		            $message .= $value->target . " " . $value->units . " " . $value->period . ". From " . date("d/m/Y", $value->period_start) 
-		            			. " to " . date("d/m/Y", $value->period_end) . ": ";
+    if(!empty($response->goal->goalStatusList)){
+        if(count($response->goal->goalStatusList) > 1){
+            $i = 1;
+            foreach ($response->goal->goalStatusList as $value) {
+                if($value->goal_met == false){
+                    $goal_met = "no";
+                } elseif($value->goal_met == true){
+                    $goal_met = "yes";
+                }
+                $message = "*Goal #".$i . "*  ";
+                $message .= $value->target . " " . $value->units . " " . $value->period . ". From " . date("d/m/Y", ($value->period_start)/1000) 
+                            . " to " . date("d/m/Y", ($value->period_end)/1000) . ": ";
 
-		            if($goal_met == "yes"){
-		            	$message .= "Goal achieved! :)";
-						$color = "5AAC56";
-		            } elseif($goal_met == "no") {
-		            	$message .= (intval($value->target) - intval($value->count)) . "left to go";
-		            	$color = "F0D84F";
-		            }
-		            
-		            $message .= "\n\n";
+                if($goal_met == "yes"){
+                    $message .= "Goal achieved! :smile:";
+                    $color = "5AAC56";
+                } elseif($goal_met == "no") {
+                    $message .= "*".(intval($value->target) - intval($value->count)) . " left to go*";
+                    $color = "F0D84F";
+                }
 
-		            $attachments[] =  array([
-			            'fallback' =>  $message,
-			            'color'    => $color,
-			            'text' =>  $message,
-			        ]);
+                var_dump($value->goal_met);
+                
+                $message .= "\n\n";
 
-		            $i++;
-		        }
-		    } elseif(count($response->goal->goalStatusList) === 1){
-		        if($response->goal->goalStatusList->goal_met == 1){
-		            $goal_met = "no";
-		            $color = "5AAC56";
-		        } elseif($response->goal->goalStatusList->goal_met == 0){
-		            $goal_met = "yes";
-		            $color = "F0D84F";
-		        }
+                $attachments[] =  array(
+                    'fallback' =>  $message,
+                    'color'    => $color,
+                    'text' =>  $message,
+                    'mrkdwn_in' => array('text'),
+                );
 
-		        $message .= "Goal #1";
-		        $message .= $value->target . " " . $value->units . " " . $value->period . ". From " . date("d/m/Y", $value->period_start) 
-		            			. " to " . date("d/m/Y", $value->period_end) . ": " . (intval($value->target) - intval($value->count));
-		        if($goal_met == "yes"){
-	            	$message .= "Goal achieved! :)";
-	            } elseif($goal_met == "no") {
-	            	$message .= (intval($value->target) - intval($value->count)) . "left to go";
-	            }
-		        $message .= "\n\n";
+                $i++;
+            }
+        } elseif(count($response->goal->goalStatusList) === 1){
+            if($response->goal->goalStatusList->goal_met == false){
+                $goal_met = "no";
+                $color = "5AAC56";
+            } elseif($response->goal->goalStatusList->goal_met == true){
+                $goal_met = "yes";
+                $color = "F0D84F";
+            }
 
-		        $attachments[] =  array([
-		            'fallback' =>  $message,
-		            'color'    => $color,
-		            'text' =>  $message,
-		        ]);
-		    }
-		}
+            $message = "*Goal #1*  ";
+            $message .= $value->target . " " . $value->units . " " . $value->period . ". From " . date("d/m/Y", ($value->period_start)/1000) 
+                            . " to " . date("d/m/Y", ($value->period_end)/1000) . ": ";
+            if($goal_met == "yes"){
+                $message .= "Goal achieved! :smile:";
+            } elseif($goal_met == "no") {
+                $message .= "*".(intval($value->target) - intval($value->count)) . " left to go*";
+            }
+            $message .= "\n\n";
 
-		$our_message = $response->goal->messages[0]->content;
+            $attachments[] =  array(
+                'fallback' =>  $message,
+                'color'    => $color,
+                'text' =>  $message,
+                'mrkdwn_in' => array('text'),
+            );
+        }
+    }
 
-		$image = $response->goal->messages[1]->content;
+    $our_message = $response->goal->messages[0]->content;
 
-		$motivation = $response->goal->messages[2]->content;
+    $image = $response->goal->messages[1]->content;
 
-		//$last_message = $our_message . "\n\n" . $image . "\n\n" . $message . "\n\n" .$motivation;
+    $motivation = $response->goal->messages[2]->content;
 
-		$attachments[] =  array([
-		            'fallback' => '*'.$user_name.'*: '.$our_message,
-		            'pretext'  => '*'.$user_name.'*: '.$our_message,
-		            'mrkdwn_in' => array('pretext'),
-		            'color'    => '#ff6600',
-		            'title'    => $motivation,
-		            'image_url'    => $image,
-		        ]);
+    //$last_message = $our_message . "\n\n" . $image . "\n\n" . $message . "\n\n" .$motivation;
 
-		$data = json_encode(array(
-	        "channel"       =>  $channel,
-	        "attachments"    =>  $attachments,
-	    ));
+    $attachments[] =  array(
+                'fallback' => '*'.$user_name.'*: '.$our_message,
+                'mrkdwn_in' => array('pretext'),
+                'color'    => '#ff6600',
+                'title'    => $motivation,
+                'image_url'    => $image,
+            );
 
-		$ch = curl_init("https://hooks.slack.com/services/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");
+    $data = json_encode(array(
+        "channel"       =>  $channel,
+        "text"             => '*'.$user_name.'*: '.$our_message,
+        "attachments"    =>  $attachments,
+    ));
 
-		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
-		curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    $ch = curl_init("https://hooks.slack.com/services/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");
 
-		// Download the given URL, and return output
-		$output = curl_exec($ch);
+    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
-		// Close the cURL resource, and free system resources
-		curl_close($ch);
+    // Download the given URL, and return output
+    $output = curl_exec($ch);
+
+    // Close the cURL resource, and free system resources
+    curl_close($ch);
 		
 	} else if($trigger_word == "setgoal"){
 
