@@ -176,11 +176,3 @@ if($trigger_word == "register"){
 	curl_close($ch);
 }
 
-
-
-
-
-
-
-
-
