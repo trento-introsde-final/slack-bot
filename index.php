@@ -2,8 +2,6 @@
 
 //$content = file_get_contents("php://input");
 
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, true );
-
 ini_set('default_socket_timeout', 360);
 
 $inWebhookUrl = "https://hooks.slack.com/services/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";
@@ -124,6 +122,8 @@ if($trigger_word == "register"){
  
     // OK cool - then let's create a new cURL resource handle
     $ch = curl_init();
+
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true );
  
     // Now set some options (most are optional)
  
