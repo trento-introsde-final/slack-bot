@@ -143,8 +143,8 @@ if($trigger_word == "register"){
 
 	$text = $_REQUEST['text'];
 	$text_array = explode(" ", $text);
-	$target_value = $text_array[1];
-	$type = $text_array[2];
+	$type = $text_array[1];
+	$target_value = $text_array[2];
 	$goal_period = $text_array[3];
 
 	$params = array (
