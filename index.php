@@ -121,13 +121,13 @@ try {
 
 		$attachments =  array([
                 'fallback' => $message,
-                'text' =>  $message,
                 'color'    => '#ff6600',
                 'title'    => $motivation,
         ]);
 
 		$data = json_encode(array(
-	        "channel"       =>  $channel,
+	        "channel"  =>  $channel,
+            'text' =>  $message,
 	        "attachments"   =>  $attachments,
 	    ));
 
