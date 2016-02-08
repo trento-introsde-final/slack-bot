@@ -195,6 +195,25 @@ try {
 
 		// Close the cURL resource, and free system resources
 		curl_close($ch);
+	} else {
+		$message = "Wrong command! These are the commands available: register, run, goalstatus, setgoal";
+
+		$data = "payload=" . json_encode(array(
+	        "channel"       =>  "#tests",
+	        "text"          =>  $message,
+	    ));
+
+		$ch = curl_init("https://hooks.slack.com/services/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");
+
+		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+		curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+		// Download the given URL, and return output
+		$output = curl_exec($ch);
+
+		// Close the cURL resource, and free system resources
+		curl_close($ch);
 	}
 } catch (SoapFault $fault) {
 
