@@ -104,13 +104,13 @@ if($trigger_word == "register"){
 		}
 	}
 	
-	$options = array(
+	/*$options = array(
 	    'http' => array(
 	        'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
 	        'method'  => 'POST',
 	        'content' => "{\"text\": " .$response->goal->messages[0]->content. "\n\n" .$message. "\n\n" .$response->goal->messages[2]->content. "\"}",
 	    ),
-	);
+	);*/
 
 	/*$context = stream_context_create($options);
 	$result = file_get_contents($inWebhookUrl, false, $context);*/
@@ -119,13 +119,15 @@ if($trigger_word == "register"){
     if (!function_exists('curl_init')){
         die('Sorry cURL is not installed!');
     }
+
+    $curl_post_data = array(
+            "content" => "{\"text\": " .$response->goal->messages[0]->content. "\n\n" .$message. "\n\n" .$response->goal->messages[2]->content. "\"}",
+            );
  
     // OK cool - then let's create a new cURL resource handle
     $ch = curl_init();
 
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true );
- 
-    // Now set some options (most are optional)
  
     // Set URL to download
     curl_setopt($ch, CURLOPT_URL, $inWebhookUrl);
