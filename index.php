@@ -146,7 +146,7 @@ if($trigger_word == "register"){
     // Close the cURL resource, and free system resources
     curl_close($ch);
  
-    echo $output;
+    die($output);
 	
 } else if($trigger_word == "setgoal"){
 
