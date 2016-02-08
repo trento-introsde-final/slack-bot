@@ -116,6 +116,7 @@ try {
 
 		$response = $client->updateRunInfo($params);
 
+		$message = $response->person->messages[0]->content;
 		$motivation = $response->person->messages[1]->content;
 		
 		if($response->person->messages[1]->type == "image"){
