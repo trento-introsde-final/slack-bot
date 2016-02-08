@@ -2,9 +2,9 @@
 
 //$content = file_get_contents("php://input");
 
-ini_set('default_socket_timeout', 360);
+ini_set('default_socket_timeout', 600);
 
-$client = new SoapClient('https://process-centric-services.herokuapp.com/processCentricServices?wsdl', array("connection_timeout" => 360));
+$client = new SoapClient('https://process-centric-services.herokuapp.com/processCentricServices?wsdl', array("connection_timeout" => 600));
 
 $trigger_word = $_REQUEST['trigger_word'];
 $trigger_word = strtolower($trigger_word);
@@ -96,7 +96,7 @@ if($trigger_word == "register"){
 
 	$message = "";
 
-	if(count($response->goal->goalStatusList) > 0){
+	if(!empty($response->goal->goalStatusList)){
 		foreach ($response->goal->goalStatusList as $value) {
 		    if($value->goal_met == 1){
 		        $goal_met = "no";
