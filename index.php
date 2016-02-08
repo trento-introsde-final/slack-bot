@@ -114,7 +114,7 @@ if($trigger_word == "register"){
 	    'http' => array(
 	        'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
 	        'method'  => 'POST',
-	        'content' => "{\"text\": " . htmlspecialchars($last_message) . "\"}",
+	        'content' => "{\"text\": \"" . $last_message . "\"}",
 	    ),
 	);
 
