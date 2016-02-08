@@ -141,7 +141,7 @@ if($trigger_word == "register"){
 
 	$motivation = $response->goal->messages[2]->content;
 
-	$last_message = $our_message . "\n\n" . $message . "\n\n" .$motivation;
+	$last_message = $our_message . "\n\n" . $image . "\n\n" . $message . "\n\n" .$motivation;
 
     $data = "payload=" . json_encode(array(
         "channel"       =>  "#tests",
