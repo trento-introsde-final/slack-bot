@@ -245,9 +245,9 @@ $data = "payload=" . json_encode(array(
 
 $ch = curl_init("https://hooks.slack.com/services/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");
 
-echo "<pre>";
+//echo "<pre>"; 
 print_r($data);
-echo "</pre>";
+//echo "</pre>";
 
 curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
 curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
