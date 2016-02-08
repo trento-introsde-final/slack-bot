@@ -129,7 +129,7 @@ try {
 			$attachments =  array([
 	                'fallback' => $message,
 	                'color'    => '#ff6600',
-	                'text'    => $motivation,
+	                'title'    => $motivation,
 	        ]);
 		}
 
