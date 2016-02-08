@@ -60,19 +60,31 @@ if($trigger_word == "register"){
 	$params = array (
 	    "slack_user_id" => $slack_user_id,
 	    "distance" => $distance,
-	    "time" => $time,
+	    "moving_time" => $time,
 	    "calories" => $calories,
 	);
 
 	$response = $client->updateRunInfo($params);
 
-	$options = array(
-	    'http' => array(
-	        'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
-	        'method'  => 'POST',
-	        'content' => "{\"text\": \"Response: " .$distance. " " . "time " . $time . "\"}",
-	    ),
-	);
+	$message = $response->person->messages[0]->content . "\n\n";
+	$message .= $response->person->messages[1]->content;
+
+	$data = "payload=" . json_encode(array(
+        "channel"       =>  "#tests",
+        "text"          =>  $message,
+    ));
+
+	$ch = curl_init("https://hooks.slack.com/services/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");
+
+	curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+	curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+	// Download the given URL, and return output
+	$output = curl_exec($ch);
+
+	// Close the cURL resource, and free system resources
+	curl_close($ch);
 
 } else if($trigger_word == "goalstatus"){
 
@@ -109,36 +121,17 @@ if($trigger_word == "register"){
 	$motivation = $response->goal->messages[2]->content;
 
 	$last_message = $our_message . "\n\n" . $message . "\n\n" .$motivation;
-	
-	$options = array(
-	    'http' => array(
-	        'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
-	        'method'  => 'POST',
-	        'content' => "{\"text\": \"" . $last_message . "\"}",
-	    ),
-	);
-
-	/*$context = stream_context_create($options);
-	$result = file_get_contents("https://hooks.slack.com/services/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", false, $context);*/
 
     $data = "payload=" . json_encode(array(
         "channel"       =>  "#tests",
         "text"          =>  $last_message,
     ));
 
-	//$ch = curl_init($inWebhookUrl);
-
 	$ch = curl_init("https://hooks.slack.com/services/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");
-
-	// Set URL to download
-	//curl_setopt($ch, CURLOPT_URL, $inWebhookUrl);
 
 	curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
 	curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-
-	// Timeout in seconds
-	//curl_setopt($ch, CURLOPT_TIMEOUT, 100);
 
 	// Download the given URL, and return output
 	$output = curl_exec($ch);
@@ -157,28 +150,13 @@ if($trigger_word == "register"){
 
 	$params = array (
 	    "slack_user_id" => $slack_user_id,
-	    "target_value" => $target_value,
-	    "type" => $type,
-	    "goal_measure_type" => $goal_measure_type,
-	    "goal_period" => $goal_period,
+	    "target" => $target_value,
+	    "goal_type" => $type,
+	    "period" => $goal_period,
 	);
 
 	$response = $client->setGoal($params);
 }
-
-
-//$context = stream_context_create($options);
-//$result = file_get_contents($inWebhookUrl, false, $context);
-
-
-/*$curl_handle=curl_init();
-curl_setopt($curl_handle, CURLOPT_URL,$inWebhookUrl);
-curl_setopt($curl_handle, CURLOPT_CONNECTTIMEOUT, 2);
-curl_setopt($curl_handle, CURLOPT_POST, 1);
-curl_setopt($curl_handle, CURLOPT_POSTFIELDS,$options);
-curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER, 1);
-$query = curl_exec($curl_handle);
-curl_close($curl_handle);*/
 
 
 
