@@ -97,23 +97,42 @@ if($trigger_word == "register"){
 	$message = "";
 
 	if(!empty($response->goal->goalStatusList)){
-		foreach ($response->goal->goalStatusList as $value) {
-		    if($value->goal_met == 1){
-		        $goal_met = "no";
-		    } elseif($value->goal_met == 0){
-		        $goal_met = "yes";
-		    }
-		    $message .= "Count: " . $value->count . "\n";
-		    $message .= "Goal met: " . $goal_met . "\n";
-		    $message .= "Name: " . $value->name . "\n";
-		    $message .= "Period: " . $value->period . "\n";
-		    $message .= "End date: " . $value->period_end . "\n";
-		    $message .= "Start date: " . $value->period_start . "\n";
-		    $message .= "Target: " . $value->target . "\n";
-		    $message .= "Type: " . $value->type . "\n";
-		    $message .= "Units: " . $value->units . "\n";
-		    $message .= "\n\n";
-		}
+    if(count($response->goal->goalStatusList) > 1){
+        foreach ($response->goal->goalStatusList as $value) {
+            if($value->goal_met == 1){
+                $goal_met = "no";
+            } elseif($value->goal_met == 0){
+                $goal_met = "yes";
+            }
+            $message .= "Count: " . $value->count . "\n";
+            $message .= "Goal met: " . $goal_met . "\n";
+            $message .= "Name: " . $value->name . "\n";
+            $message .= "Period: " . $value->period . "\n";
+            $message .= "End date: " . $value->period_end . "\n";
+            $message .= "Start date: " . $value->period_start . "\n";
+            $message .= "Target: " . $value->target . "\n";
+            $message .= "Type: " . $value->type . "\n";
+            $message .= "Units: " . $value->units . "\n";
+            $message .= "\n\n";
+        }
+    } elseif(count($response->goal->goalStatusList) === 1){
+	        if($response->goal->goalStatusList->goal_met == 1){
+	            $goal_met = "no";
+	        } elseif($response->goal->goalStatusList->goal_met == 0){
+	            $goal_met = "yes";
+	        }
+
+	        $message .= "Count: " . $response->goal->goalStatusList->count . "\n";
+	        $message .= "Goal met: " . $goal_met . "\n";
+	        $message .= "Name: " . $response->goal->goalStatusList->name . "\n";
+	        $message .= "Period: " . $response->goal->goalStatusList->period . "\n";
+	        $message .= "End date: " . $response->goal->goalStatusList->period_end . "\n";
+	        $message .= "Start date: " . $response->goal->goalStatusList->period_start . "\n";
+	        $message .= "Target: " . $response->goal->goalStatusList->target . "\n";
+	        $message .= "Type: " . $response->goal->goalStatusList->type . "\n";
+	        $message .= "Units: " . $response->goal->goalStatusList->units . "\n";
+	        $message .= "\n\n";
+	    }
 	}
 
 	$our_message = $response->goal->messages[0]->content;
