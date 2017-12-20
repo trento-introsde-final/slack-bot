@@ -2,9 +2,6 @@
 
 ## Slack Custom Integration
 
-Please check the full [project documentation] [2].
+Please check the full [project documentation] (https://github.com/trento-introsde-final/documentation).
 
-Deployed on [https://slack-interface.herokuapp.com/] [1]
-
-[1]: https://slack-interface.herokuapp.com/
-[2]: https://github.com/trento-introsde-final/documentation
+Deployed on [https://slack-interface.herokuapp.com/] (https://slack-interface.herokuapp.com/)
