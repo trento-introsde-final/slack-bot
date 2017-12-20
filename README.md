@@ -1,6 +1,6 @@
-#FitBot - IntroSDE Final Project - UNITN
+# FitBot - IntroSDE Final Project - UNITN
 
-##Slack Custom Integration
+## Slack Custom Integration
 
 Please check the full [project documentation] [2].
 
